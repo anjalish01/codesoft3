@@ -1,0 +1,57 @@
+import random
+
+def get_computer_choice():
+    return random.choice(['rock', 'paper', 'scissors'])
+
+def determine_winner(user, comp):
+    if user == comp:
+        return 'tie'
+    wins = {
+        'rock': 'scissors',
+        'scissors': 'paper',
+        'paper': 'rock'
+    }
+    return 'user' if wins[user] == comp else 'computer'
+
+def play_round():
+    while True:
+        user = input("Enter rock, paper, or scissors (or 'exit' to quit): ").lower()
+        if user == 'exit':
+            return None, None, None
+        if user in ['rock', 'paper', 'scissors']:
+            comp = get_computer_choice()
+            winner = determine_winner(user, comp)
+            print(f"You chose: {user} | Computer chose: {comp}")
+            if winner == 'tie':
+                print("It's a tie!")
+            elif winner == 'user':
+                print("You win! 🎉")
+            else:
+                print("Computer wins! 💻")
+            return user, comp, winner
+        else:
+            print("Invalid choice. Try again.")
+
+def main():
+    print("🎮 Welcome to Rock–Paper–Scissors!")
+    user_score = comp_score = 0
+
+    while True:
+        user, comp, winner = play_round()
+        if user is None:  # user typed exit
+            break
+        if winner == 'user':
+            user_score += 1
+        elif winner == 'computer':
+            comp_score += 1
+        print(f"Score → You: {user_score} | Computer: {comp_score}\n")
+
+        again = input("Play again? (y/n): ").lower()
+        if again != 'y':
+            break
+
+    print("\nThanks for playing!")
+    print(f"Final Score → You: {user_score} | Computer: {comp_score}")
+
+if __name__ == "__main__":
+    main()
